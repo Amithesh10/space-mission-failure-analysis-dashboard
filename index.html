@@ -482,11 +482,7 @@ footer a{color:var(--cyan);text-decoration:none;font-weight:600}
     A complete Power BI analytics project that evaluates mission success, cost performance,
     launch vehicle efficiency, fuel usage, and scientific yield across 500 space missions.
   </p>
-  <div class="hero-btns">
-    <a id="btn-explore" href="#pages" class="btn btn-primary">🔭 Explore Dashboard</a>
-    <a id="btn-dax" href="#dax" class="btn btn-outline">📐 View DAX Measures</a>
-    <a href="https://drive.google.com/drive/folders/1ec_VsL3Di0drHUx4QIL8kAd2HAtL7Zio?usp=drive_link" class="btn btn-outline" target="_blank" rel="noopener">⬇ Download PBIX</a>
-  </div>
+
   <div class="hero-stats">
     <div>
       <div class="hero-stat-val">500</div>
@@ -818,19 +814,27 @@ footer a{color:var(--cyan);text-decoration:none;font-weight:600}
 </footer>
 
 <script>
-// ── Smooth scroll fix ──
-function smoothTo(id){
-  event.preventDefault();
-  const el = document.getElementById(id);
-  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-}
-
-// Fix all nav links too
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', function(e){
-    const id = this.getAttribute('href').slice(1);
-    const el = document.getElementById(id);
-    if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+// ── Smooth scroll for buttons and nav ──
+document.addEventListener('DOMContentLoaded', function(){
+  document.getElementById('btn-explore').addEventListener('click', function(e){
+    e.preventDefault();
+    document.getElementById('pages').scrollIntoView({behavior:'smooth'});
+  });
+  document.getElementById('btn-dax').addEventListener('click', function(e){
+    e.preventDefault();
+    document.getElementById('dax').scrollIntoView({behavior:'smooth'});
+  });
+  document.querySelectorAll('.nav-links a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = this.getAttribute('href').replace('#','');
+      var el = document.getElementById(id);
+      if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); }
+    });
+  });
+  var backTop = document.querySelector('footer a[href="#top"]');
+  if(backTop) backTop.addEventListener('click', function(e){
+    e.preventDefault();
+    window.scrollTo({top:0, behavior:'smooth'});
   });
 });
 
